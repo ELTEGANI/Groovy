@@ -11,6 +11,7 @@
         android:theme="@style/Theme.LearnTesting">
         <activity
             android:name=".MainActivity"
+            android:label="Playlists"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
