@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.LearnTesting">
+        android:theme="@style/Theme.LearnTesting"
+        android:name=".GroovyApplication"
+        >
         <activity
             android:name=".MainActivity"
             android:label="Playlists"
