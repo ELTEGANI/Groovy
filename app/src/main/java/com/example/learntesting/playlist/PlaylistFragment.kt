@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.learntesting.R
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import kotlinx.android.synthetic.main.fragment_playlist.*
+import kotlinx.android.synthetic.main.fragment_playlist.view.*
 import javax.inject.Inject
 
 
@@ -33,22 +32,28 @@ class PlaylistFragment : Fragment() {
 
         setUpViewModel()
 
-        viewModel.playList.observe(this as LifecycleOwner) { playlists ->
-            with(view as RecyclerView) {
-                if(playlists.getOrNull() != null)
-                 setUpList(playlists.getOrNull()!!)
-                else{
+        viewModel.loader.observe(this as LifecycleOwner) { Loader ->
+           when(Loader){
+               true-> loader.visibility = View.VISIBLE
+               else-> loader.visibility = View.GONE
+           }
+        }
 
-                }
+        viewModel.playList.observe(this as LifecycleOwner) { playlists ->
+                if(playlists.getOrNull() != null)
+                 setUpList(view.playlist,playlists.getOrNull()!!)
+                else{
             }
         }
 
         return view
     }
 
-    private fun RecyclerView.setUpList(playlists: List<PlayList>) {
-        layoutManager = LinearLayoutManager(context)
-        adapter = MyPlaylistRecyclerViewAdapter(playlists)
+    private fun setUpList(recyclerView: RecyclerView, playlists: List<PlayList>) {
+        with(recyclerView) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = MyPlaylistRecyclerViewAdapter(playlists)
+        }
     }
 
     private fun setUpViewModel() {

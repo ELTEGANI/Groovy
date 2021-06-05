@@ -80,5 +80,7 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
     }
 
+    implementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
 
-  }
+
+}

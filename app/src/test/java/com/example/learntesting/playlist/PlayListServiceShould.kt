@@ -15,7 +15,7 @@ class PlayListServiceShould : BaseUnitTes(){
 
     private lateinit var playListServices: PlayListServices
     private val playListApi : PlayListApi = mock()
-    private val playList : List<PlayList> = mock()
+    private val playList : List<PlayListRaw> = mock()
 
     @ExperimentalCoroutinesApi
     @Test
