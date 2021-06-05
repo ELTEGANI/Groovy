@@ -16,12 +16,16 @@ import java.lang.RuntimeException
 class PlayListRepositoryShould : BaseUnitTes(){
 
     private val playListServices : PlayListServices = mock()
+    private val mapper : PlayListMapper = mock()
     private val playList  = mock<List<PlayList>>()
+    private val playListRaw = mock<List<PlayListRaw>>()
     private val exception = RuntimeException("Something went wrong")
+
+
     @ExperimentalCoroutinesApi
     @Test
     fun getPlayListFromService() = runBlockingTest {
-        val repository = PlayListRepository(playListServices)
+        val repository = mockSuccessfulCase()
         repository.getPlaylists()
         verify(playListServices,times(1)).fetchPlayLists()
     }
@@ -40,23 +44,33 @@ class PlayListRepositoryShould : BaseUnitTes(){
         assertEquals(exception,repository.getPlaylists().first().exceptionOrNull())
     }
 
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun delegateBusinessLoginToMapper() = runBlockingTest{
+        val repository = mockSuccessfulCase()
+         repository.getPlaylists().first()
+         verify(mapper, times(1)).invoke(playListRaw)
+    }
+
     private suspend fun mockFailure(): PlayListRepository {
         whenever(playListServices.fetchPlayLists()).thenReturn(
             flow {
-                emit(Result.failure<List<PlayList>>(exception))
+                emit(Result.failure<List<PlayListRaw>>(exception))
             }
         )
-        return PlayListRepository(playListServices)
+        return PlayListRepository(playListServices,mapper)
     }
 
 
-    private suspend fun mockSuccessfulCase(): PlayListRepository {
+     private suspend fun mockSuccessfulCase(): PlayListRepository {
         whenever(playListServices.fetchPlayLists()).thenReturn(
             flow {
-                emit(Result.success(playList))
+                emit(Result.success(playListRaw))
             }
         )
-        return PlayListRepository(playListServices)
+        whenever(mapper.invoke(playListRaw)).thenReturn(playList)
+        return PlayListRepository(playListServices,mapper)
     }
 
 }
