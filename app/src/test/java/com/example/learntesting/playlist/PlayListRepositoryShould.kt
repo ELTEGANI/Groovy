@@ -17,10 +17,9 @@ class PlayListRepositoryShould : BaseUnitTes(){
 
     private val playListServices : PlayListServices = mock()
     private val mapper : PlayListMapper = mock()
-    private val playList  = mock<List<PlayList>>()
+    private val playlists = mock<List<PlayList>>()
     private val playListRaw = mock<List<PlayListRaw>>()
     private val exception = RuntimeException("Something went wrong")
-
 
     @ExperimentalCoroutinesApi
     @Test
@@ -34,12 +33,12 @@ class PlayListRepositoryShould : BaseUnitTes(){
     @Test
     fun emitPlayListsFromService() = runBlockingTest {
         val repository = mockSuccessfulCase()
-        assertEquals(playList,repository.getPlaylists().first().getOrNull())
+        assertEquals(playlists,repository.getPlaylists().first().getOrNull())
     }
 
     @ExperimentalCoroutinesApi
     @Test
-    fun propagateErrors() = runBlockingTest{
+    fun propagateErrors() = runBlockingTest {
       val repository = mockFailure()
         assertEquals(exception,repository.getPlaylists().first().exceptionOrNull())
     }
@@ -69,7 +68,7 @@ class PlayListRepositoryShould : BaseUnitTes(){
                 emit(Result.success(playListRaw))
             }
         )
-        whenever(mapper.invoke(playListRaw)).thenReturn(playList)
+        whenever(mapper.invoke(playListRaw)).thenReturn(playlists)
         return PlayListRepository(playListServices,mapper)
     }
 

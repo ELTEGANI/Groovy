@@ -23,6 +23,7 @@ class PlayListViewModelShould : BaseUnitTes() {
     private val expected = Result.success(playList)
     private val exception = RuntimeException("Something went wrong")
 
+
     @ExperimentalCoroutinesApi
     @Test
     fun getPlaylistsFromRepository() = runBlockingTest{
@@ -74,8 +75,7 @@ class PlayListViewModelShould : BaseUnitTes() {
                 }
             )
         }
-        val viewModel = PlayListViewModel(repository)
-        return viewModel
+        return PlayListViewModel(repository)
     }
 
 
