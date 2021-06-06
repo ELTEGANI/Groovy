@@ -6,6 +6,7 @@ import junit.framework.Assert.assertEquals
 import org.junit.Test
 
 class PlayListMapperShould : BaseUnitTes() {
+
  private val playListRaw = PlayListRaw("1","da name","da category")
  private val playListRawRock = PlayListRaw("1","da name","rock")
  private val mapper = PlayListMapper()

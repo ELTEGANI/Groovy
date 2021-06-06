@@ -12,9 +12,9 @@ class PlayListServices @Inject constructor(
     private val playListApi: PlayListApi
 ) {
 
-    suspend fun fetchPlayLists() : Flow<Result<List<PlayListRaw>>>{
+    suspend fun fetchPlaylists() : Flow<Result<List<PlayListRaw>>> {
         return flow {
-              emit(Result.success(playListApi.fetchPlayLists()))
+            emit(Result.success(playListApi.fetchPlayLists()))
         }.catch {
             emit(Result.failure(RuntimeException("Something went wrong")))
         }

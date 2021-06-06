@@ -20,10 +20,10 @@ val idlingResource = OkHttp3IdlingResource.create("okhttp", client)
 class PlayListModule {
 
     @Provides
-    fun playListApi(retrofit: Retrofit) = retrofit.create(PlayListApi::class.java)
+    fun playListApi(retrofit: Retrofit): PlayListApi = retrofit.create(PlayListApi::class.java)
 
     @Provides
-    fun retrofit() = Retrofit.Builder()
+    fun retrofit(): Retrofit = Retrofit.Builder()
         .baseUrl("https://my-json-server.typicode.com/ELTEGANI/testjson/")
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())

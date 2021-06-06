@@ -11,11 +11,13 @@ class PlayListViewModel(
 
     val loader = MutableLiveData<Boolean>()
 
-    val  playList = liveData {
+    val  playList =  liveData<Result<List<PlayList>>> {
         loader.postValue(true)
-        emitSource(playListRepository.getPlaylists().onEach {
+        emitSource(playListRepository.getPlaylists()
+            .onEach {
             loader.postValue(false)
-        }.asLiveData())
+        }
+            .asLiveData())
     }
 
 }
