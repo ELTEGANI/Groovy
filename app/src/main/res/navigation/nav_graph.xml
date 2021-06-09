@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/playlistFragment">
+
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.example.learntesting.playlist.PlaylistFragment"
+        android:label="PlaylistFragment" >
+        <action
+            android:id="@+id/action_playlistFragment_to_playListDetailFragment"
+            app:destination="@id/playListDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playListDetailFragment"
+        android:name="com.example.learntesting.PlayListDetailFragment"
+        android:label="fragment_play_list_detail"
+        tools:layout="@layout/fragment_play_list_detail">
+         <argument
+             android:name="playlistId"
+             app:argType="string"
+             app:nullable="false"
+             />
+    </fragment>
+</navigation>

@@ -4,6 +4,7 @@ plugins {
         id 'kotlin-android-extensions'
         id 'kotlin-kapt'
         id 'dagger.hilt.android.plugin'
+        id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -82,5 +83,8 @@ dependencies {
 
     implementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
 
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
 }

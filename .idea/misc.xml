@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_play.xml" value="0.21145833333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12817028985507245" />
+        <entry key="app/src/main/res/layout/fragment_play_list_detail.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/fragment_playlist.xml" value="0.17617753623188406" />
         <entry key="app/src/main/res/layout/playlist_item.xml" value="0.17617753623188406" />
       </map>
