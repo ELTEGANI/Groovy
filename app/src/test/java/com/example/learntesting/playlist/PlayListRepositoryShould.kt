@@ -26,7 +26,7 @@ class PlayListRepositoryShould : BaseUnitTes(){
     fun getPlayListFromService() = runBlockingTest {
         val repository = mockSuccessfulCase()
         repository.getPlaylists()
-        verify(playListServices,times(1)).fetchPlayLists()
+        verify(playListServices,times(1)).fetchPlaylists()
     }
 
     @ExperimentalCoroutinesApi
@@ -53,7 +53,7 @@ class PlayListRepositoryShould : BaseUnitTes(){
     }
 
     private suspend fun mockFailure(): PlayListRepository {
-        whenever(playListServices.fetchPlayLists()).thenReturn(
+        whenever(playListServices.fetchPlaylists()).thenReturn(
             flow {
                 emit(Result.failure<List<PlayListRaw>>(exception))
             }
@@ -63,7 +63,7 @@ class PlayListRepositoryShould : BaseUnitTes(){
 
 
      private suspend fun mockSuccessfulCase(): PlayListRepository {
-        whenever(playListServices.fetchPlayLists()).thenReturn(
+        whenever(playListServices.fetchPlaylists()).thenReturn(
             flow {
                 emit(Result.success(playListRaw))
             }

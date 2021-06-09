@@ -21,7 +21,7 @@ class PlayListServiceShould : BaseUnitTes(){
     @Test
     fun fetchPlayServiceFromApi() = runBlockingTest {
         playListServices = PlayListServices(playListApi)
-        playListServices.fetchPlayLists().first()
+        playListServices.fetchPlaylists().first()
         verify(playListApi, times(1)).fetchPlayLists()
     }
 
@@ -29,14 +29,14 @@ class PlayListServiceShould : BaseUnitTes(){
     @Test
     fun convertValuesOfResultAndEmitsThem() = runBlockingTest {
         mockSuccessfulCase()
-        assertEquals(Result.success(playList),playListServices.fetchPlayLists().first())
+        assertEquals(Result.success(playList),playListServices.fetchPlaylists().first())
     }
 
     @ExperimentalCoroutinesApi
     @Test
     fun emitErrorResultWhenNetworkFails() = runBlockingTest{
        mockFailerCase()
-        assertEquals("Something went wrong",playListServices.fetchPlayLists().first().exceptionOrNull()?.message)
+        assertEquals("Something went wrong",playListServices.fetchPlaylists().first().exceptionOrNull()?.message)
     }
 
     private suspend fun mockFailerCase() {
