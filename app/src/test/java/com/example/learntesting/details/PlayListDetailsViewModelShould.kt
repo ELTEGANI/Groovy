@@ -13,6 +13,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
+import petros.efthymiou.groovy.utils.captureValues
 import petros.efthymiou.groovy.utils.getValueForTest
 import java.lang.RuntimeException
 
@@ -31,6 +32,7 @@ class PlayListDetailsViewModelShould : BaseUnitTes(){
     @Test
     fun getPlayListDetailFromService() = runBlockingTest{
         mockSuccessfulCase()
+        playListDetailFragmentViewModel.getPlayListDetails(id)
         playListDetailFragmentViewModel.playListDetails.getValueForTest()
         verify(service, times(1)).fetchPlayListDetails(id)
     }
@@ -39,6 +41,7 @@ class PlayListDetailsViewModelShould : BaseUnitTes(){
     @Test
     fun emitPlayListDetailFromService() = runBlockingTest{
         mockSuccessfulCase()
+        playListDetailFragmentViewModel.getPlayListDetails(id)
         assertEquals(expected,playListDetailFragmentViewModel.playListDetails.getValueForTest())
     }
 
@@ -47,6 +50,28 @@ class PlayListDetailsViewModelShould : BaseUnitTes(){
     fun emitErrorWhenServiceFails() = runBlockingTest{
        mockErrorCase()
         assertEquals(error,playListDetailFragmentViewModel.playListDetails.getValueForTest())
+    }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun showSpinnerWhileLoading() = runBlockingTest{
+        mockSuccessfulCase()
+        playListDetailFragmentViewModel.loader.captureValues{
+            playListDetailFragmentViewModel.getPlayListDetails(id)
+            playListDetailFragmentViewModel.playListDetails.getValueForTest()
+            assertEquals(true,values[0])
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun closeLoaderAfterPlayListDetailLoad() = runBlockingTest{
+        mockSuccessfulCase()
+        playListDetailFragmentViewModel.loader.captureValues{
+            playListDetailFragmentViewModel.getPlayListDetails(id)
+            playListDetailFragmentViewModel.playListDetails.getValueForTest()
+            assertEquals(false,values.last())
+        }
     }
 
     private suspend fun mockErrorCase() {
@@ -66,7 +91,6 @@ class PlayListDetailsViewModelShould : BaseUnitTes(){
             }
         )
         playListDetailFragmentViewModel = PlayListDetailFragmentViewModel(service)
-        playListDetailFragmentViewModel.getPlayListDetails(id)
     }
 
 

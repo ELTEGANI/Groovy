@@ -1,5 +1,6 @@
 package com.example.learntesting.detailes
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.learntesting.R
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_play_list_detail.*
+import kotlinx.android.synthetic.main.fragment_playlist.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -29,16 +32,31 @@ class PlayListDetailsFragment : Fragment() {
         val id = playListDetailsFragmentArgs.playlistId
         setUpViewModel()
         playListDetailFragmentViewModel.getPlayListDetails(id)
-        observeLiveData()
+        observePlayListDetail()
+        displayLoader()
         return  view
     }
 
-    private fun observeLiveData() {
+    private fun displayLoader() {
+        playListDetailFragmentViewModel.loader.observe(this as LifecycleOwner) { Loader ->
+            when (Loader) {
+                true -> details_loader.visibility = View.VISIBLE
+                else -> details_loader.visibility = View.GONE
+            }
+        }
+    }
+
+    @SuppressLint("ShowToast")
+    private fun observePlayListDetail() {
         playListDetailFragmentViewModel.playListDetails.observe(this as LifecycleOwner) { playListDetails ->
             if (playListDetails.getOrNull() != null) {
                 setUi(playListDetails)
             } else {
-
+               Snackbar.make(
+                   playlist_detail_root,
+                   getString(R.string.generic_error),
+                   Snackbar.LENGTH_LONG
+               ).show()
             }
         }
     }
