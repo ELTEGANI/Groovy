@@ -3,11 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/playlist_detail_root"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".PlayListDetailsFragment">
 
+    <ProgressBar
+        android:id="@+id/details_loader"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/playlist_name"
